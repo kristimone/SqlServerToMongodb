@@ -1,0 +1,1 @@
+Server=KRISTI-PC\ALPHA;Database=webinf;Trusted_Connection=True;

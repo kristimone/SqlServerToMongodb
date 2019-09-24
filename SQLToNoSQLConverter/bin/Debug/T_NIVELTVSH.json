@@ -1,0 +1,19 @@
+	{
+	"_id":{"$oid":"5cec4249b1772e1ed034a095"},
+	"IDTVSH":"22",
+	"TVSHKODI":"01",
+	"TVSHEMERTIMI":"Nivvel 10 %",
+	"TVSHPERQINDJE":"10",
+	"IDNDERMARRJE":"-1"
+	}
+	,
+	{
+	
+	"_id":{"$oid":"5cec4249b1772e1ed034a096"},
+	"IDTVSH":"23",
+	"TVSHKODI":"02",
+	"TVSHEMERTIMI":"Nivel 20%",
+	"TVSHPERQINDJE":"20",
+	"IDNDERMARRJE":"-1"
+	}
+
