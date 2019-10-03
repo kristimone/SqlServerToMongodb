@@ -16,7 +16,7 @@ namespace SQLToNoSQLConverter
         MongoClient client;
         IMongoDatabase database;
         string mongodbconnectionstring = "mongodb://localhost:27017";
-        string mongodb = "alphawebtest";
+        string mongodb = "webinf";
 
         public SQLToNoSQLConverterForm()
         {
@@ -42,7 +42,7 @@ namespace SQLToNoSQLConverter
                     database.DropCollection(table);
                     conn.Open();
                     SqlDataReader objReader = objcmd.ExecuteReader();
-                    List<BsonDocument> bsonlist = new List<BsonDocument>(1000);
+                    List<BsonDocument> bsonlist = new List<BsonDocument>(10000000);
                     while (objReader.Read())
                     {
                         BsonDocument objBson = new BsonDocument();
@@ -53,13 +53,25 @@ namespace SQLToNoSQLConverter
                             {
                                 objBson.Add(new BsonElement(objReader.GetName(j), objReader[j].ToString()));
                             }
+                            else if ((objReader[j].GetType() == typeof(Int16)))
+                            {
+                                objBson.Add(new BsonElement(objReader.GetName(j), BsonValue.Create(objReader.GetInt16(j))));
+                            }
                             else if ((objReader[j].GetType() == typeof(Int32)))
                             {
                                 objBson.Add(new BsonElement(objReader.GetName(j), BsonValue.Create(objReader.GetInt32(j))));
                             }
-                            else if (objReader[j].GetType() == typeof(float))
+                            else if ((objReader[j].GetType() == typeof(Int64)))
                             {
-                                objBson.Add(new BsonElement(objReader.GetName(j), BsonValue.Create(objReader.GetFloat(j))));
+                                objBson.Add(new BsonElement(objReader.GetName(j), BsonValue.Create(objReader.GetInt64(j))));
+                            }
+                            else if (objReader[j].GetType() == typeof(Decimal))
+                            {
+                                objBson.Add(new BsonElement(objReader.GetName(j), BsonValue.Create(objReader.GetDecimal(j))));
+                            }
+                            else if (objReader[j].GetType() == typeof(Double))
+                            {
+                                objBson.Add(new BsonElement(objReader.GetName(j), BsonValue.Create(objReader.GetDouble(j))));
                             }
                             else if (objReader[j].GetType() == typeof(DateTime))
                             {
@@ -72,10 +84,6 @@ namespace SQLToNoSQLConverter
                             else if (objReader[j].GetType() == typeof(DBNull))
                             {
                                 objBson.Add(new BsonElement(objReader.GetName(j), BsonNull.Value));
-                            }
-                            else if (objReader[j].GetType() == typeof(Byte))
-                            {
-                                objBson.Add(new BsonElement(objReader.GetName(j), BsonValue.Create(objReader.GetByte(j))));
                             }
                             else
                             {
